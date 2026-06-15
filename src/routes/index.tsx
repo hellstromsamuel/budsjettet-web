@@ -1,11 +1,21 @@
-import { useState } from "react";
-import { Button } from "./components/ui/button";
-import { cn } from "./lib/utils";
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
+
+export const Route = createFileRoute("/")({
+  component: Index,
+});
 
 const CONTAINER_CLASSNAME = "mx-auto max-w-5xl px-4";
 
-function App() {
+function Index() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    console.log("supabase", supabase);
+  }, []);
 
   if (!isAuthenticated) {
     return (
@@ -50,5 +60,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
