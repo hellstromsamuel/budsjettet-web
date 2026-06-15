@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSession } from "@/lib/auth";
 import { LoginScreen } from "@/components/auth/LoginScreen";
 import { Header } from "@/components/layout/Header";
-import { Button } from "@/components/ui/button";
+import { TransactionsSection } from "@/features/transactions/TransactionsSection";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const CONTAINER_CLASSNAME = "mx-auto max-w-5xl px-4";
+const CONTAINER_CLASSNAME = "mx-auto max-w-5xl w-full px-4";
 
 function Index() {
   const session = useSession();
@@ -16,12 +16,10 @@ function Index() {
   if (!session) return <LoginScreen />;
 
   return (
-    <div className="grid min-h-svh w-full">
+    <div className="grid w-full overflow-y-auto">
       <Header />
       <main className={CONTAINER_CLASSNAME}>
-        <section>
-          <Button>Click me</Button>
-        </section>
+        <TransactionsSection />
       </main>
     </div>
   );
