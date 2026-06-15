@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSession } from "@/lib/auth";
-import { LoginScreen } from "@/features/auth/LoginScreen";
-import { Header } from "@/features/layout/Header";
+import { LoginScreen } from "@/components/auth/LoginScreen";
+import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
