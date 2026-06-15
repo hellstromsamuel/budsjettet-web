@@ -42,3 +42,7 @@ The client is initialised in `src/lib/supabase.ts` and exported as `supabase`. I
 ```ts
 import { supabase } from '@/lib/supabase'
 ```
+
+## Auth
+
+Authentication uses Supabase with Google OAuth. The user clicks "Logg inn med Google", gets redirected to Google's consent screen, and is sent back to the app with an active session. Session state is reactive — components re-render automatically on sign-in and sign-out.
