@@ -11,11 +11,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_, session) => setSession(session));
+    } = supabase.auth.onAuthStateChange((_, session) => {
+      setSession(session);
+    });
     return () => subscription.unsubscribe();
   }, []);
 
-  return <AuthContext.Provider value={session}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={session}>{children}</AuthContext.Provider>
+  );
 }
 
 export const useSession = () => useContext(AuthContext);
