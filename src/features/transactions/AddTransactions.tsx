@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { format } from "date-fns";
+import { Check, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DialogFooter } from "@/components/ui/dialog";
+import { DialogDrawerFooter } from "@/components/ui/dialog-drawer";
+import { DatePicker } from "@/components/ui/date-picker";
 import {
   ToggleGroup,
   ToggleGroupItem,
@@ -17,16 +19,14 @@ type DraftRow = {
   amount: string;
   type: TransactionType;
   description: string;
-  date: string;
+  date: Date;
 };
-
-const today = () => new Date().toISOString().slice(0, 10);
 
 const emptyRow = (): DraftRow => ({
   amount: "",
   type: "expense",
   description: "",
-  date: today(),
+  date: new Date(),
 });
 
 export function AddTransactions({ onDone }: { onDone: () => void }) {
@@ -50,7 +50,7 @@ export function AddTransactions({ onDone }: { onDone: () => void }) {
         amount: Number(row.amount),
         type: row.type,
         description: row.description.trim() || null,
-        date: row.date,
+        date: format(row.date, "yyyy-MM-dd"),
       }));
 
     if (payload.length === 0) return;
@@ -61,9 +61,12 @@ export function AddTransactions({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         {rows.map((row, index) => (
-          <div key={index} className="flex items-center gap-2">
+          <div
+            key={index}
+            className="flex flex-wrap items-center gap-2 sm:flex-nowrap"
+          >
             <ToggleGroup
               type="single"
               value={row.type}
@@ -80,24 +83,25 @@ export function AddTransactions({ onDone }: { onDone: () => void }) {
               type="number"
               inputMode="decimal"
               placeholder="Beløp"
-              className="w-28"
+              className="w-24"
               value={row.amount}
               onChange={(e) => updateRow(index, { amount: e.target.value })}
             />
             <Input
               placeholder="Beskrivelse"
+              className="w-40 flex-1 min-w-0"
               value={row.description}
               onChange={(e) =>
                 updateRow(index, { description: e.target.value })
               }
             />
-            <Input
-              type="date"
-              className="w-40"
+            <DatePicker
               value={row.date}
-              onChange={(e) => updateRow(index, { date: e.target.value })}
+              onChange={(date) => date && updateRow(index, { date })}
+              className="w-40"
             />
             <Button
+              type="button"
               variant="ghost"
               size="icon-sm"
               onClick={() => removeRow(index)}
@@ -110,16 +114,27 @@ export function AddTransactions({ onDone }: { onDone: () => void }) {
         ))}
       </div>
 
-      <Button variant="outline" size="sm" className="w-fit" onClick={addRow}>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className="w-fit"
+        onClick={addRow}
+      >
         <Plus className="size-4" />
         Ny rad
       </Button>
 
-      <DialogFooter>
-        <Button onClick={handleSubmit} disabled={addMutation.isPending}>
+      <DialogDrawerFooter>
+        <Button
+          type="button"
+          onClick={handleSubmit}
+          disabled={addMutation.isPending}
+        >
+          <Check className="size-4" />
           {addMutation.isPending ? "Lagrer…" : "Lagre"}
         </Button>
-      </DialogFooter>
+      </DialogDrawerFooter>
     </div>
   );
 }

@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  DialogDrawer,
+  DialogDrawerContent,
+  DialogDrawerHeader,
+  DialogDrawerTitle,
+  DialogDrawerTrigger,
+} from "@/components/ui/dialog-drawer";
 import { AddTransactions } from "./AddTransactions";
 import { TransactionsTable } from "./TransactionsTable";
 
@@ -18,20 +18,20 @@ export function TransactionsSection() {
     <section className="flex flex-col gap-6 py-8">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Transaksjoner</h1>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
+        <DialogDrawer open={open} onOpenChange={setOpen}>
+          <DialogDrawerTrigger asChild>
             <Button>
               <Plus className="size-4" />
               Legg til
             </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-3xl">
-            <DialogHeader>
-              <DialogTitle>Legg til transaksjoner</DialogTitle>
-            </DialogHeader>
+          </DialogDrawerTrigger>
+          <DialogDrawerContent className="sm:max-w-3xl">
+            <DialogDrawerHeader>
+              <DialogDrawerTitle>Legg til transaksjoner</DialogDrawerTitle>
+            </DialogDrawerHeader>
             <AddTransactions onDone={() => setOpen(false)} />
-          </DialogContent>
-        </Dialog>
+          </DialogDrawerContent>
+        </DialogDrawer>
       </div>
 
       <TransactionsTable />
