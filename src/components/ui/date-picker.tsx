@@ -1,9 +1,7 @@
-"use client";
-
 import { useState } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -14,17 +12,19 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+interface DatePickerProps {
+  value?: Date;
+  onChange?: (date: Date | undefined) => void;
+  placeholder?: string;
+  className?: string;
+}
+
 export function DatePicker({
   value,
   onChange,
   placeholder = "Velg dato",
   className,
-}: {
-  value?: Date;
-  onChange: (date: Date | undefined) => void;
-  placeholder?: string;
-  className?: string;
-}) {
+}: DatePickerProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -48,7 +48,7 @@ export function DatePicker({
           mode="single"
           selected={value}
           onSelect={(date) => {
-            onChange(date);
+            onChange?.(date);
             setOpen(false);
           }}
           locale={nb}
