@@ -10,6 +10,16 @@ export type TransactionInsert =
 export type TransactionType =
   Database["public"]["Enums"]["transaction_type"];
 
+export const TRANSACTION_TYPE_LABEL: Record<TransactionType, string> = {
+  income: "🤑 Inn",
+  expense: "💸 Ut",
+};
+
+export const TRANSACTION_TYPE_EMOJI: Record<TransactionType, string> = {
+  income: "🤑",
+  expense: "💸",
+};
+
 export const transactionsKey = (userId?: string) =>
   ["transactions", userId] as const;
 
