@@ -119,6 +119,11 @@ export function AddTransactions({ onDone }: { onDone: () => void }) {
                 <ToggleGroupItem value="income">{TRANSACTION_TYPE_LABEL.income}</ToggleGroupItem>
                 <ToggleGroupItem value="expense">{TRANSACTION_TYPE_LABEL.expense}</ToggleGroupItem>
               </ToggleGroup>
+              <DatePicker
+                value={row.date}
+                onChange={(date) => date && updateRow(index, { date })}
+                className="col-span-2 w-full sm:col-span-1 sm:w-40"
+              />
               <Input
                 ref={(el) => { amountRefs.current[index] = el; }}
                 type="number"
@@ -133,11 +138,6 @@ export function AddTransactions({ onDone }: { onDone: () => void }) {
                 className="sm:w-40 sm:flex-1 sm:min-w-0"
                 value={row.description}
                 onChange={(e) => updateRow(index, { description: e.target.value })}
-              />
-              <DatePicker
-                value={row.date}
-                onChange={(date) => date && updateRow(index, { date })}
-                className="col-span-2 w-full sm:w-40"
               />
             </div>
 
